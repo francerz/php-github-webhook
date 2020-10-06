@@ -86,20 +86,21 @@ class Handler
         }
 
         chdir($repo->path);
+        $commands = $event_obj->commands;
         if (!empty($event_obj->autostash)) {
-            $event_obj->commands = array_merge(
+            $commands = array_merge(
                 [
                     'git stash push "'.join('" "', $event_obj->autostash).'"',
                     'git reset'
                 ],
-                $event_obj->commands,
+                $commands,
                 [
                     'git stash pop'
                 ]
             );
         }
-        if (!empty($event_obj->commands)) {
-            foreach ($event_obj->commands as $cmd) {
+        if (!empty($commands)) {
+            foreach ($commands as $cmd) {
                 exec($cmd, $output, $ret);
                 if ($ret > 0) {
                     return $response
