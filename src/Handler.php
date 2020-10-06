@@ -48,8 +48,9 @@ class Handler
         $content = MessageHelper::getContent($request);
 
         if (!is_object($content) || is_object($content->repository)) {
-            $response = $response->withStatus(StatusCodes::BAD_REQUEST);
-            return $response;
+            return $response
+                ->withStatus(StatusCodes::BAD_REQUEST)
+                ->withBody(new StringStream("Bad request body or repository data."));
         }
 
 
@@ -57,8 +58,9 @@ class Handler
         $repo_branch = explode('/', $content->ref)[2];
         $repo_key = "{$repo_branch}@{$repo_name}";
         if (!array_key_exists($repo_key, $this->repos)) {
-            $response = $response->withStatus(StatusCodes::BAD_REQUEST);
-            return $response;
+            return $response
+                ->withStatus(StatusCodes::BAD_REQUEST)
+                ->withBody(new StringStream("Not existant repository {$repo_key}."));
         }
         $repo = $this->repos[$repo_key];
 
