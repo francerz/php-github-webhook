@@ -67,7 +67,7 @@ class Handler
         }
         $repo = $this->repos[$repo_key];
 
-        $event = $request->getHeader('X-GitHub-Event');
+        $event = $request->getHeaderLine('X-GitHub-Event');
         $event_obj = null;
         if (property_exists($repo->events, $event)) {
             $event_obj = $repo->events->{$event};
@@ -77,6 +77,12 @@ class Handler
         
         if (is_null($event_obj)) {
             return $response->withStatus(StatusCodes::NO_CONTENT);
+        }
+
+        if (!file_exists($repo->path) || is_dir($repo->path)) {
+            return $response
+                ->withStatus(StatusCodes::INTERNAL_SERVER_ERROR)
+                ->withBody(new StringStream("No repository directory found."));
         }
 
         chdir($repo->path);
