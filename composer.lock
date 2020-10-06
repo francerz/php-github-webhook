@@ -1,0 +1,132 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "a25d006f18807c90de87907262182efb",
+    "packages": [
+        {
+            "name": "francerz/php-http",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/francerz/php-http.git",
+                "reference": "40014fd4cc68c2d1bfce4e338f1feaf561f6f3f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/francerz/php-http/zipball/40014fd4cc68c2d1bfce4e338f1feaf561f6f3f1",
+                "reference": "40014fd4cc68c2d1bfce4e338f1feaf561f6f3f1",
+                "shasum": ""
+            },
+            "require": {
+                "francerz/php-power-data": "^0.1",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Francerz\\Http\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Basic HTTP client",
+            "time": "2020-10-05T23:01:57+00:00"
+        },
+        {
+            "name": "francerz/php-power-data",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/francerz/php-power-data.git",
+                "reference": "33fe22280e4e2824a9361a25cd020b8e0b4ebe0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/francerz/php-power-data/zipball/33fe22280e4e2824a9361a25cd020b8e0b4ebe0e",
+                "reference": "33fe22280e4e2824a9361a25cd020b8e0b4ebe0e",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Francerz\\PowerData\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Fran CZ"
+                }
+            ],
+            "description": "PHP data structures for complex data handling",
+            "time": "2020-10-05T22:54:16+00:00"
+        },
+        {
+            "name": "psr/http-message",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "time": "2016-08-06T14:39:51+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
+}

@@ -1,0 +1,103 @@
+<?php
+
+namespace Francerz\GithubWebhook;
+
+use Francerz\Http\BodyParsers;
+use Francerz\Http\Helpers\MessageHelper;
+use Francerz\Http\Parsers\JsonParser;
+use Francerz\Http\Response;
+use Francerz\Http\Server;
+use Francerz\Http\ServerRequest;
+use Francerz\Http\StatusCodes;
+use Francerz\Http\StringStream;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
+class Handler
+{
+    private $config;
+    private $repos;
+
+    public function loadConfigFromFile(string $path)
+    {
+        $contents = file_get_contents($path);
+        $config = json_decode($contents);
+
+        $this->config = $config;
+
+        $this->repos = array_column(
+            array_map(function($v) {
+                    $v->name_branch = "{$v->branch}@{$v->name}";
+                    return $v;
+                },
+                $config->repositories
+            ),
+            null,
+            'name'
+        );
+    }
+    public function handle()
+    {
+        $response = $this->handleRequest(new ServerRequest());
+        Server::output($response);
+    }
+    public function handleRequest(RequestInterface $request) : ResponseInterface
+    {
+        $response = new Response();
+        BodyParsers::register(JsonParser::class);
+        $content = MessageHelper::getContent($request);
+
+        if (!is_object($content) || is_object($content->repository)) {
+            $response = $response->withStatus(StatusCodes::BAD_REQUEST);
+            return $response;
+        }
+
+
+        $repo_name = $content->repository->full_name;
+        $repo_branch = explode('/', $content->ref)[2];
+        $repo_key = "{$repo_branch}@{$repo_name}";
+        if (!array_key_exists($repo_key, $this->repos)) {
+            $response = $response->withStatus(StatusCodes::BAD_REQUEST);
+            return $response;
+        }
+        $repo = $this->repos[$repo_key];
+
+        $event = $request->getHeader('X-GitHub-Event');
+        $event_obj = null;
+        if (property_exists($repo->events, $event)) {
+            $event_obj = $repo->events->{$event};
+        } elseif (property_exists($repo->events, '*')) {
+            $event_obj = $repo->events->{"*"};
+        }
+        
+        if (is_null($event_obj)) {
+            return $response->withStatus(StatusCodes::NO_CONTENT);
+        }
+
+        chdir($repo->path);
+        if (!empty($event_obj->autostash)) {
+            $event_obj->commands = array_merge(
+                [
+                    'git stash push "'.join('" "', $event_obj->autostash).'"',
+                    'git reset'
+                ],
+                $event_obj->commands,
+                [
+                    'git stash pop'
+                ]
+            );
+        }
+        if (!empty($event_obj->commands)) {
+            foreach ($event_obj->commands as $cmd) {
+                exec($cmd, $output, $ret);
+                if ($ret > 0) {
+                    return $response
+                        ->withStatus(StatusCodes::INTERNAL_SERVER_ERROR)
+                        ->withBody(new StringStream(join("\n", $output)));
+                }
+            }
+        }
+
+        return $response->withStatus(StatusCodes::OK);
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "name": "fcz/php-github-webhook",
+    "description": "Webhook for Github auto pulling when event.",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Francerz",
+            "email": "francerzam@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/functions.php"
+        ],
+        "psr-4": {
+            "Francerz\\GithubWebhook\\" : "src"
+        }
+    },
+    "require": {
+        "francerz/php-http": "^0.1.0"
+    }
+}
