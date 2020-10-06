@@ -49,6 +49,7 @@ class Handler
 
         if (!is_object($content) || is_object($content->repository)) {
             ob_start();
+            var_dump($_SERVER);
             var_dump($request);
             $data = ob_get_clean();
             return $response
