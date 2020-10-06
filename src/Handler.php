@@ -47,7 +47,7 @@ class Handler
         BodyParsers::register(JsonParser::class);
         $content = MessageHelper::getContent($request);
 
-        if (!is_object($content) || is_object($content->repository)) {
+        if (!is_object($content) || !is_object($content->repository)) {
             ob_start();
             var_dump($content);
             $data = ob_get_clean();
