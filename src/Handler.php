@@ -49,8 +49,7 @@ class Handler
 
         if (!is_object($content) || is_object($content->repository)) {
             ob_start();
-            var_dump($_SERVER);
-            var_dump($request);
+            var_dump($content);
             $data = ob_get_clean();
             return $response
                 ->withStatus(StatusCodes::BAD_REQUEST)
