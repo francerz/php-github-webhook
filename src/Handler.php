@@ -79,7 +79,7 @@ class Handler
             return $response->withStatus(StatusCodes::NO_CONTENT);
         }
 
-        if (!file_exists($repo->path) || is_dir($repo->path)) {
+        if (!file_exists($repo->path) || !is_dir($repo->path)) {
             return $response
                 ->withStatus(StatusCodes::INTERNAL_SERVER_ERROR)
                 ->withBody(new StringStream("No repository directory found."));
