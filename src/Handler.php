@@ -48,9 +48,12 @@ class Handler
         $content = MessageHelper::getContent($request);
 
         if (!is_object($content) || is_object($content->repository)) {
+            ob_start();
+            var_dump($content);
+            $data = ob_get_clean();
             return $response
                 ->withStatus(StatusCodes::BAD_REQUEST)
-                ->withBody(new StringStream("Bad request body or repository data."));
+                ->withBody(new StringStream("Bad request body or repository data.\n".$data));
         }
 
 
