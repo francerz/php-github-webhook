@@ -3,32 +3,14 @@
         {
             "name": "francerz/tecnm-dpii",
             "branch": "master",
-            "path": "/var/www/repos/tecnm-dpii",
+            "path": ["/var/www/repos/tecnm-dpii"],
             "events": {
                 "push": {
-                    "autostash": [
-                        "proyectos2/application/config/config.php",
-                        "proyectos2/application/config/database.php",
-                        "proyectos2_admin/application/config/config.php",
-                        "proyectos2_admin/application/config/database.php",
-                        "proyectos2_evalua/application/config/config.php",
-                        "proyectos2_evalua/application/config/database.php",
-                        "proyectos2_evaluainformes/application/config/config.php",
-                        "proyectos2_evaluainformes/application/config/database.php",
-                        "cvu/application/config/config.php",
-                        "cvu/application/config/database.php",
-                        "cvu_api_v2/application/config/config.php",
-                        "cvu_api_v2/application/config/database.php"
-                    ],
-                    "commands": [
-                        "git pull -f 2>&1"
-                    ]
+                    "precommands": [],
+                    "gitpull": true,
+                    "postcommands": []
                 }
-            },
-            "after_pull": [
-                "!**/vendor/**/composer.json && composer install",
-                "!**/node_modules/**/package.json && npm install"
-            ]
+            }
         }
     ]
 }
