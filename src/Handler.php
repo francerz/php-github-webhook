@@ -85,12 +85,16 @@ class Handler
                 ->withBody(new StringStream("No repository directory found."));
         }
 
-        chdir($repo->path);
         $commands = [];
         if (!empty($event_obj->gitpull)) {
             $commands = array_merge($commands, ['git pull -f 2>&1']);
         }
-        if (!empty($commands)) {
+        if (empty($repo->path) || empty($commands)) {
+            return $response->withStatus(StatusCodes::NO_CONTENT);
+        }
+
+        foreach ($repo->path as $path) {
+            chdir($path);
             foreach ($commands as $cmd) {
                 exec($cmd, $output, $ret);
                 if ($ret > 0) {
