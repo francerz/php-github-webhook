@@ -21,7 +21,7 @@
                         "cvu_api_v2/application/config/database.php"
                     ],
                     "commands": [
-                        "git pull"
+                        "git pull -f 2>&1"
                     ]
                 }
             },
