@@ -1,9 +1,9 @@
 {
     "repositories": [
         {
-            "name": "francerz/tecnm-dpii",
+            "name": "{full_repo_name}",
             "branch": "master",
-            "path": ["/var/www/repos/tecnm-dpii"],
+            "path": ["{full_repo_path}"],
             "events": {
                 "push": {
                     "precommands": [],
