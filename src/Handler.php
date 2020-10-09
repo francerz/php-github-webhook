@@ -79,11 +79,6 @@ class Handler
             return $response->withStatus(StatusCodes::NO_CONTENT);
         }
 
-        if (!file_exists($repo->path) || !is_dir($repo->path)) {
-            return $response
-                ->withStatus(StatusCodes::INTERNAL_SERVER_ERROR)
-                ->withBody(new StringStream("No repository directory found."));
-        }
 
         $commands = [];
         if (!empty($event_obj->gitpull)) {
@@ -94,6 +89,11 @@ class Handler
         }
 
         foreach ($repo->path as $path) {
+            if (!file_exists($path) || !is_dir($path)) {
+                return $response
+                    ->withStatus(StatusCodes::INTERNAL_SERVER_ERROR)
+                    ->withBody(new StringStream("No repository directory found."));
+            }
             chdir($path);
             foreach ($commands as $cmd) {
                 exec($cmd, $output, $ret);
