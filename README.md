@@ -81,7 +81,13 @@ Installation
 
 Clone repository
 ```bash
-git clone https://github.com/francerz/php-github-webhook
+git clone https://github.com/francerz/php-github-webhook /path/to/php-github-webhook
+```
+
+Install the composer dependencies
+```bash
+cd /path/to/php-github-webhook
+composer install
 ```
 
 Add Alias to `public` directory
