@@ -81,6 +81,9 @@ class Handler
 
 
         $commands = [];
+        if (!empty($event_obj->gitrestoreall)) {
+            $commands = array_merge($commands, ['git restore .']);
+        }
         if (!empty($event_obj->gitpull)) {
             $commands = array_merge($commands, ['git pull -f 2>&1']);
         }
